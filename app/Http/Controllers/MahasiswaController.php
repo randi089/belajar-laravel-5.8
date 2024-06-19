@@ -12,7 +12,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswa = DB::table('mahasiswa')->get();
+        $mahasiswa = DB::table('students')->get();
         return view('mahasiswa.index', ['mahasiswa' => $mahasiswa]);
     }
 
