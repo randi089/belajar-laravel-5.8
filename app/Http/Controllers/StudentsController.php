@@ -29,16 +29,22 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
-        // Student::create([
-        //     'nama' => $request->nama,
-        //     'nobp' => $request->nobp,
-        //     'email' => $request->email,
-        //     'jurusan' => $request->jurusan
-        // ]);
-
+        $request->validate([
+            'nama' => 'required',
+            'nobp' => 'required|unique:App\Models\Student,nobp|size:14',
+            'email' => 'required|unique:App\Models\Student,email|email',
+            'jurusan' => 'required'
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong!',
+            'nobp.required' => 'No Bp tidak boleh kosong!',
+            'nobp.unique' => 'No Bp sudah terdaftar!',
+            'nobp.size' => 'No Bp salah!',
+            'email.required' => 'Email tidak boleh kosong!',
+            'email.email' => 'Email harus benar!',
+            'jurusan.required' => 'Jurusan tidak boleh kosong!'
+        ]);
         Student::create($request->all());
-
-        return redirect('/students');
+        return redirect('/students')->with('status', 'Data Mahasiswa Berhasil Ditambahkan!');
     }
 
     /**
