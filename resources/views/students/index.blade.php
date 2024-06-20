@@ -5,13 +5,17 @@
 @section('container')
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6">
                 <h1 class="my-3">Daftar Mahasiswa</h1>
 
                 <a href="/students/create" class="btn btn-primary my-3">Tambah Data Mahasiswa</a>
-                @if (session('status'))
+                @if (session('green'))
                     <div class="alert alert-success">
-                        {{ session('status') }}
+                        {{ session('green') }}
+                    </div>
+                @elseif (session('red'))
+                    <div class="alert alert-danger">
+                        {{ session('red') }}
                     </div>
                 @endif
 
