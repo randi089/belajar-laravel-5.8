@@ -40,6 +40,7 @@ class StudentsController extends Controller
             'nobp.unique' => 'No Bp sudah terdaftar!',
             'nobp.size' => 'No Bp salah!',
             'email.required' => 'Email tidak boleh kosong!',
+            'email.unique' => 'Email sudah terdaftar!',
             'email.email' => 'Email harus benar!',
             'jurusan.required' => 'Jurusan tidak boleh kosong!'
         ]);
@@ -68,6 +69,20 @@ class StudentsController extends Controller
      */
     public function update(Request $request, Student $student)
     {
+        $request->validate([
+            'nama' => 'required',
+            'nobp' => 'required|size:14',
+            'email' => 'required|email',
+            'jurusan' => 'required'
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong!',
+            'nobp.required' => 'No Bp tidak boleh kosong!',
+            'nobp.size' => 'No Bp salah!',
+            'email.required' => 'Email tidak boleh kosong!',
+            'email.email' => 'Email harus benar!',
+            'jurusan.required' => 'Jurusan tidak boleh kosong!'
+        ]);
+
         Student::where('id', $student->id)
             ->update([
                 'nama' => $request->nama,
@@ -84,6 +99,6 @@ class StudentsController extends Controller
     public function destroy(Student $student)
     {
         Student::destroy($student->id);
-        return redirect('/students')->with('delete', 'Data Mahasiswa Berhasil Dihapus!');
+        return redirect('/students')->with('red', 'Data Mahasiswa Berhasil Dihapus!');
     }
 }
